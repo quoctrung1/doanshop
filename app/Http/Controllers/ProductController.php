@@ -10,6 +10,7 @@ use App\Models\Brand;
 use App\Models\Product;
 use Session;
 use Validator;
+use Illuminate\Support\Str; 
 use DB;
 use Carbon\Carbon;
 
@@ -58,27 +59,28 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-       // dd($request);
-      if($request->hasFile('image'))
-       {
-           $name=$request->image->getClientOriginalName();
-           $request->image->move('image/Product', $name); 
-       }
-       $product = new  Product();
-       $product->product_code = $request->product_code;
-       $product->name = $request->name;
-       $product->description = $request->description;
-       $product->price = $request->price;
-       $product->slug = $request->slug;
-       $product->image = $request->image;
-       $product->promotion = $request->promotion;
-       $product->quantity = $request->quantity;
-       $product->brand_id = $request->brand_id;
-       $product->category_id = $request->category_id;
-       $product->created_by = $request->created_by;
-       $product->updated_by = $request->updated_by;
-       $product->save();
-       if ($product){
+        $request->validated();
+        if($request->hasFile('image'))
+        {
+            $image=$request->image->getClientOriginalName();
+            $request->image->move('images', $image); 
+        }
+        $product = new  Product();
+        $product->product_code = $request->product_code;
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->slug = Str::slug($request->slug ? $request->slug : $request->name);
+        $product->image = $image;
+        $product->promotion = $request->promotion;
+        $product->quantity = $request->quantity;
+        $product->brand_id = $request->brand_id;
+        $product->category_id = $request->category_id;
+        $product->isdelete = false;
+        $product->isdisplay = false;
+        $product->updated_at = null;
+        $product->save();
+        if ($product){
             return redirect('/admin/product')->with('message','Create successfully!');
         }else{
             return back()->with('err','Save error!');
@@ -94,7 +96,7 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = Product::findOrfail($id);
-        return view('admin.product.show',compact('product'));
+        return view('admin.product.detail',compact('product'));
     }
 
     /**
@@ -118,46 +120,32 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProductRequest $request, $id)
     {
-        //
         $product = Product::findOrFail($id);
         if($product)
         {
-            if ($request->hasFile('images') )
+            if ($request->hasFile('imagee') )
             {
-                $name=$request->image->getClientOriginalName();
-                $request->image->move('image/Product', $name); 
-
-                $product->product_code = $request->product_code;
-                $product->name = $request->name;
-                $product->description = $request->description;
-                $product->price = $request->price;
-                $product->slug = $request->slug;
-                $product->image = $request->image;
-                $product->promotion = $request->promotion;
-                $product->quantity = $request->quantity;
-                $product->brand_id = $request->brand_id;
-                $product->category_id = $request->category_id;
-                $product->created_by = $request->created_by;
-                $product->updated_by = $request->updated_by;
-                $product->update();
+                $imagename=$request->imagee->getClientOriginalName();
+                $request->imagee->move('images', $imagename); 
             }else{
-                $product->product_code = $request->product_code;
-                $product->name = $request->name;
-                $product->description = $request->description;
-                $product->price = $request->price;
-                $product->slug = $request->slug;
-                $product->promotion = $request->promotion;
-                $product->quantity = $request->quantity;
-                $product->brand_id = $request->brand_id;
-                $product->category_id = $request->category_id;
-                $product->updated_at = Carbon::now()->toDateTimeString();
-                $product->created_by = $request->created_by;
-                $product->updated_by = $request->updated_by;
-                $product->update();
-                
+                $imagename = $request->image;
             }
+            $product->name = $request->name;
+            $product->description = $request->description;
+            $product->price = $request->price;
+            $product->slug = Str::slug($request->slug ? $request->slug : $request->name);
+            $product->image = $imagename;
+            $product->promotion = $request->promotion;
+            $product->quantity = $request->quantity;
+            $product->brand_id = $request->brand_id;
+            $product->category_id = $request->category_id;
+            $product->updated_at = Carbon::now()->toDateTimeString();
+            $product->isdelete = false;
+            $product->isdisplay = false;
+            $product->updated_at = Carbon::now()->toDateTimeString() ;
+            $product->update();
             return redirect('/admin/product')->with('message','Update successfully!');
         }
         return back()->with('err','Update err!');
@@ -178,5 +166,12 @@ class ProductController extends Controller
         } else {
             return back()->with('err','Delete failse!');
         }  
+    }
+    public function setvalue(Request $request)
+    {
+        if ($request->ajax()) {
+            $value = class_basename($request->value);
+            return Response($value);
+        }
     }
 }

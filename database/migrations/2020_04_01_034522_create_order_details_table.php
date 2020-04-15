@@ -32,8 +32,8 @@ class CreateOrderDetailsTable extends Migration
             ->on('products')
             ->onUpdate('cascade')
             ->onDelete('cascade');
-            $table->string('created_by');
-            $table->string('updated_by');
+            $table->string('created_by')->nullable();
+            $table->string('updated_by')->nullable();
             $table->timestamps();
         });
     }

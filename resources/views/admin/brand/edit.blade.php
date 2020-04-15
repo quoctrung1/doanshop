@@ -1,41 +1,35 @@
 @extends('admin.layout.main')
-@section('title') Trang chủ
-@endsection
+@section('title','Edit Brand')
 @section('content')
-<div class="page-header mt-2">
-    <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href=""> Trang chủ </a></li>
-            <li class="breadcrumb-item" ><a href="{{route('brand.index')}}" title="Danh mục"> Nhãn hiệu </a></li>
-            <li class="breadcrumb-item active"> Danh sách</li>
-        </ol>
-    </div>
-<div class="">
-	<h3 class="text-success text-uppercase "><b>BRAND</b></h3>
-	{{Form::open(['route'=>['brand.update',$brand->id],'method'=>'put'])}}
-	<div class="row ">
+<div class="page-header">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a href="">Admin</a></li>
+		<li class="breadcrumb-item" ><a href="{{route('brand.index')}}" title="Danh mục">Brand</a></li>
+		<li class="breadcrumb-item active">Edit</li>
+	</ol>
+</div>
+<div class="card">
+	<div class="card-header">
+		<b class="h4">Edit Brand</b>
+	</div>
+	<div class="card-body col-md-12">
+		{{Form::open(['route'=>['brand.update',$brand->id],'method'=>'put'])}}
+		<input type="hidden" name="id" value="{{$brand->id}}" placeholder="">
 		<div class="form-group col-12">
-			{{ Form::label('name','Nhãn hiệu : ')}}
-			{{ Form::text('name',$brand->name,['class'=>'form-control'])}}
+			{{ Form::label('name','Name : ')}}
+			{{ Form::text('name',$brand->name,['class'=>'form-control col-md-8'])}}
 			<span class="text-danger">{{ $errors->first('name')}}</span>
 		</div>
 		<div class="form-group col-12">
-			{{ Form::label('description','Mô tả : ')}}
-			{{ Form::text('description',$brand->description,['class'=>'form-control'])}}
+			{{ Form::label('description','Description : ')}}
+			{{ Form::textarea('description',$brand->description,['class'=>'form-control col-md-8'])}}
 			<span class="text-danger">{{ $errors->first('description')}}</span>
 		</div>
-		<div class="form-group col-12">
-			{{ Form::label('created_by','Create : ')}}
-			{{ Form::text('created_by',$brand->created_by,['class'=>'form-control'])}}
-		</div>	
-		<div class="form-group col-12">
-			{{ Form::label('updated_by','Update : ')}}
-			{{ Form::text('updated_by',$brand->updated_by,['class'=>'form-control'])}}
-		</div>	
+		<div class="form-group col-md-12">
+			{{ Form::submit('Update',['class'=>'btn btn-success']) }}
+			<a class="btn btn-danger" href="{{route('brand.index')}}">Back</a>
+		</div>
+		{{ Form::close() }}
 	</div>
-	<div class="form-group">
-		{{ Form::submit('Lưu',['class'=>'btn btn-outline-success']) }}
-		<a class="btn btn-outline-danger" href="">Quay lại</a>
-	</div>
-	{{ Form::close() }}
 </div>
 @endsection

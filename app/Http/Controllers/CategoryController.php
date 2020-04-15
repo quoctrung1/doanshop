@@ -6,6 +6,7 @@ use App\Models\Product;
 use Session;
 use App\Http\Requests\CategoryRequest;
 use DB;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 
 class CategoryController extends Controller
@@ -50,9 +51,10 @@ class CategoryController extends Controller
         $category = new Category;
         $category->name = $request->name;
         $category->description = $request->description;
-        $category->slug = Str::slug($request->slug ? $request->slug : $request->name);;
-        $category->created_by = $request->created_by;
-        $category->updated_by = $request->updated_by;
+        $category->slug = Str::slug($request->slug ? $request->slug : $request->name);
+        $category->isdelete = false;
+        $category->isdisplay = false;
+        $category->updated_at = null;
         $category->save();
         if ($category){
             return redirect('/admin/category')->with('message','Create successfully!');
@@ -70,7 +72,7 @@ class CategoryController extends Controller
     public function show($id)
     {
         $category = Category::findOrFail($id);
-        return view('admin.category.show',compact('category'));
+        return view('admin.category.detail',compact('category'));
     }
 
     /**
@@ -93,18 +95,19 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoryRequest $request, $id)
     {
-        //
+        $request->validated();
         $category= Category::findOrfail($id);
         if (isset($category))
         {
             $category->name = $request->name;
             $category->description = $request->description;
-            $category->slug = $request->slug ? $request->slug : $request->name;
-            $category->created_by = $request->created_by;
-            $category->updated_by = $request->updated_by;   
-            $category->save();
+            $category->slug = $request->slug ? $request->slug : $request->name; 
+            $category->isdelete = false;
+            $category->isdisplay = false;
+            $category->updated_at = Carbon::now()->toDateTimeString() ;
+            $category->update();
         }else{
             return back()->with('err','Save error!');
         }

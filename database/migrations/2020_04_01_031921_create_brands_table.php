@@ -17,9 +17,11 @@ class CreateBrandsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->unique();
             $table->text('description');
-            $table->string('slug')->nullable();
-            $table->string('created_by');
-            $table->string('updated_by');
+            $table->string('slug');
+            $table->boolean('isdelete');
+            $table->boolean('isdisplay');
+            $table->string('created_by')->nullable();
+            $table->string('updated_by')->nullable();
             $table->timestamps();
         });
     }

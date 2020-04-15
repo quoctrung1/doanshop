@@ -13,8 +13,8 @@
 
 // ADMIN HERE
 // Trang chu Admin hien thi o day
-Route::get('admin', function() {
-	return view('admin.layout.main');
+Route::get('admin/home', function() {
+	return view('admin.homeadmin');
 });
 
 Route::resource('admin/about','AboutController');
@@ -26,6 +26,8 @@ Route::resource('admin/order','OrderController');
 Route::resource('admin/orderdetail','OrderDetailController');
 Route::resource('admin/product','ProductController');
 Route::resource('admin/slide','SlideController');
+
+Route::get('/setvalue', 'ProductController@setvalue');
 // END ADMIN
 
 // --------------------------------------------
@@ -38,7 +40,9 @@ Route::get('/', function () {
 // END USER
 
 // ---------------------------------------------
-
+Route::get('/test', function () {
+    return view('admin.layouts.master');
+});
 
 // CART
 Route::get('product', 'ProductsController@index');

@@ -7,6 +7,7 @@ use App\Models\Product;
 use Session;
 use App\Http\Requests\BrandRequest;
 use DB;
+use Carbon\Carbon;
 use Illuminate\Support\Str; 
 
 class BrandController extends Controller
@@ -53,8 +54,9 @@ class BrandController extends Controller
         $brand->name = $request->name;
         $brand->description = $request->description;
         $brand->slug = Str::slug($request->slug ? $request->slug : $request->name);
-        $brand->created_by = $request->created_by;
-        $brand->updated_by = $request->updated_by;
+        $brand->isdelete = false;
+        $brand->isdisplay = false;
+        $brand->updated_at = null;
         $brand->save();
         Session::flash('message','Save successfully!');
         Session::flash('err','Save err!');
@@ -74,7 +76,7 @@ class BrandController extends Controller
     public function show($id)
     {
         $brand = Brand::findOrFail($id);
-        return view('admin.brand.show',compact('brand'));
+        return view('admin.brand.detail',compact('brand'));
     }
 
     /**
@@ -96,18 +98,19 @@ class BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(BrandRequest $request, $id)
     {
-        //
+        $request->validated();
         $brand= Brand::findOrfail($id);
         if (isset($brand))
         {
             $brand->name = $request->name;
             $brand->description = $request->description;
             $brand->slug = $request->slug ? $request->slug : $request->name;
-            $brand->created_by = $request->created_by;
-            $brand->updated_by = $request->updated_by;
-            $brand->save();
+            $brand->isdelete = false;
+            $brand->isdisplay = false;
+            $brand->updated_at = Carbon::now()->toDateTimeString() ;
+            $brand->update();
         }else{
             return back()->with('err','Save error!');
         }

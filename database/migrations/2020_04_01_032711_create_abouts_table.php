@@ -20,6 +20,8 @@ class CreateAboutsTable extends Migration
             $table->text('content');
             $table->string('email');
             $table->string('logo');
+            $table->string('created_by')->nullable();
+            $table->string('updated_by')->nullable();
             $table->timestamps();
         });
     }

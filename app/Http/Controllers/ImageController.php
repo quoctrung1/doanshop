@@ -1,12 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
-use App\Models\Image;
-use Session;
-use App\Http\Requests\ImageRequest;
-use DB;
 
+use Illuminate\Http\Request;
 
 class ImageController extends Controller
 {
@@ -17,8 +13,7 @@ class ImageController extends Controller
      */
     public function index()
     {
-        $images= DB::table('images')->paginate(4);
-        return view('admin.image.index',compact('images'));
+        return view('admin.image.index');
     }
 
     /**
@@ -37,21 +32,9 @@ class ImageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ImageRequest $request)
+    public function store(Request $request)
     {
-        $request->validated();
-        $image = new Image;
-        $image->url = $request->url;
-        $image->created_by = $request->created_by;
-        $image->updated_by = $request->updated_by;
-        $image->save();
-        Session::flash('message','Save successfully!');
-        Session::flash('err','Save err!');
-        if ($image){
-            return redirect('/admin/image')->with('message','Create successfully!');
-        }else{
-            return back()->with('err','Save error!');
-        }
+        //
     }
 
     /**
@@ -62,8 +45,7 @@ class ImageController extends Controller
      */
     public function show($id)
     {
-        $image = Image::findOrFail($id);
-        return view('admin.image.edit',compact('image'));
+        return view('admin.image.detail');
     }
 
     /**
@@ -74,8 +56,7 @@ class ImageController extends Controller
      */
     public function edit($id)
     {
-        $image = Image::findOrFail($id);
-        return view('admin.image.edit',compact('image'));
+        return view('admin.image.edit');
     }
 
     /**
@@ -87,17 +68,7 @@ class ImageController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $image= Image::findOrfail($id);
-        if (isset($image))
-        {
-            $image->url = $request->url;
-            $image->created_by = $request->created_by;
-            $image->updated_by = $request->updated_by;
-            $image->save();
-        }else{
-            return back()->with('err','Save error!');
-        }
-        return redirect('admin/image')->with('message','Edit successfully!');
+        //
     }
 
     /**
@@ -108,12 +79,6 @@ class ImageController extends Controller
      */
     public function destroy($id)
     {
-        $image = Image::findOrFail($id);
-        if ($image){
-            $image->delete();
-        }else{
-            return redirect("admin/image")->with('message','Dữ liệu đang được sử dụng bên sản phẩm!');
-        }
-        return redirect("admin/image")->with('message','Xóa thành công');
+        //
     }
 }

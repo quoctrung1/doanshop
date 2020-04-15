@@ -1,11 +1,11 @@
 <?php
-
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\About;
 use Session;
+use App\Http\Requests\AboutRequest;
+use Carbon\Carbon;
 use DB;
-
 class AboutController extends Controller
 {
     /**
@@ -39,22 +39,27 @@ class AboutController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AboutRequest $request)
     {
-        $about = new About;
-        $about->title = $request->title;
-        $about->phone = $request->phone;
-        $about->content = $request->content;
-        $about->email = $request->email;
-        $about->logo = $request->logo;
-        $about->save();
-        if ($about){
-            return redirect('/admin/about')->with('message','Create successfully!');
-        }else{
-            return back()->with('err','Save error!');
+
+        
+        if($request->hasFile('logo')){
+            $logo=$request->logo->getClientOriginalName();
+            $request->logo->move('image', $logo);
+            $about = new About;
+            $about->title = $request->title;
+            $about->phone = $request->phone;
+            $about->content = $request->content;
+            $about->email = $request->email;
+            $about->logo = $logo;
+            $about->save();
+            if ($about){
+                return redirect('/admin/about')->with('message','Create New successfully!');
+            }else{
+                return back()->with('err','Save error!');
+            }
         }
     }
-
     /**
      * Display the specified resource.
      *
@@ -64,9 +69,8 @@ class AboutController extends Controller
     public function show($id)
     {
         $about = About::findOrFail($id);
-        return view('admin.about.show',compact('about'));
+        return view('admin.about.detail',compact('about'));
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -78,7 +82,6 @@ class AboutController extends Controller
         $about = About::findOrFail($id);
         return view('admin.about.edit',compact('about'));
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -86,23 +89,22 @@ class AboutController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AboutRequest $request, $id)
     {
-        
-        $about = About::findOrFail($id);
-        if (isset($about))
-        {
-            $about->title = $request->title;
-            $about->phone = $request->phone;
-            $about->content = $request->content;
-            $about->email = $request->email;
-            $about->logo = $request->logo;
-            $about->update();
-        }else{
-            return back()->with('err','Save error!');
-        }
-        return redirect('admin/about
-            ')->with('message','Edit successfully!'); 
+
+      $about = About::findOrFail($id);
+      if($request->hasFile('logo')){
+        $logo=$request->logo->getClientOriginalName();
+        $request->logo->move('images', $logo);
+        $about->title = $request->title;
+        $about->phone = $request->phone;
+        $about->content = $request->content;
+        $about->email = $request->email;
+        $about->logo = $logo;
+        $about->updated_at = Carbon::now()->toDateTimeString() ;
+        $about->update();
+    }
+        return redirect('admin/about')->with('message','Edit successfully!'); 
     }
 
     /**
@@ -116,9 +118,7 @@ class AboutController extends Controller
         $about = About::findOrFail($id);
         if ($about){
             $about->delete();
-        }else{
-            return redirect("admin/about")->with('message','Dữ liệu đang được sử dụng bên sản phẩm!');
         }
-        return redirect("admin/about")->with('message','Xóa thành công');
+        return redirect("admin/about")->with('message','Delete successfully!');
     }
 }

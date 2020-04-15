@@ -31,7 +31,8 @@ class ProductRequest extends FormRequest
             'quantity' =>'required',
             'promotion' =>'required|numeric',
             'brand_id' => 'required',
-            'category_id' => 'required'
+            'category_id' => 'required',
+            'image' => 'required',
 
 
         ];
@@ -50,8 +51,9 @@ class ProductRequest extends FormRequest
             'promotion.numeric'=>'Bạn nhập sai kiểu dữ liệu',
             'description.required'=>'Hãy nhập nội dung sản phẩm',
             'description.max'=>'Độ dài tối đa là 500 ký tự',
-             'brand_id.required'=>'Hãy chọn nhãn hàng ',
-            'category_id.required'=>'Hãy chọn danh mục '
+            'brand_id.required'=>'Hãy chọn nhãn hàng ',
+            'category_id.required'=>'Hãy chọn danh mục ',
+            'image.required'=>'Hãy chọn ảnh '
 
         ];
     }

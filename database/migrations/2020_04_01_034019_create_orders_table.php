@@ -25,8 +25,8 @@ class CreateOrdersTable extends Migration
             ->on('users')
             ->onUpdate('cascade')
             ->onDelete('cascade');
-            $table->string('created_by');
-            $table->string('updated_by');
+            $table->string('created_by')->nullable();
+            $table->string('updated_by')->nullable();
             $table->timestamps();
         });
     }

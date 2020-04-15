@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
 class BrandRequest extends FormRequest
@@ -21,13 +22,20 @@ class BrandRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(Request $request)
     {
-        return [
-            'name' => 'required|max:100',
-            'name'=>'required|unique:brands,name,'.$this->id,
-            'description' => 'required|max:500'
-        ];
+        if ($this->method()=='PUT') {
+            return [
+                'name'=>'required|max:255|unique:brands,name,'.$request->get('id'),
+                'description' => 'required|max:500'
+            ];
+        }else{
+            return [
+                'name' => 'required|max:255',
+                'name'=>'required|unique:brands,name,'.$this->id,
+                'description' => 'required|max:500'
+            ];
+        } 
     }
     public function messages()
     {
@@ -40,4 +48,3 @@ class BrandRequest extends FormRequest
         ];
     }
 }
-

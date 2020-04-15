@@ -32,6 +32,8 @@ class CreateCommentsTable extends Migration
             ->on('products')
             ->onUpdate('cascade')
             ->onDelete('cascade');
+            $table->boolean('isdelete');
+            $table->boolean('isdisplay');
             
             $table->timestamps();
         });

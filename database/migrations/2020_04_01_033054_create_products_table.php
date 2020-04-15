@@ -18,9 +18,9 @@ class CreateProductsTable extends Migration
             $table->string('product_code')->unique();
             $table->string('name');
             $table->text('description');
-            $table->string('image')->nullable();
-            $table->integer('price')->default(0);
-            $table->string('slug')->nullable();
+            $table->string('image');
+            $table->integer('price');
+            $table->string('slug');
             $table->integer('quantity');
             $table->integer('promotion');
             
@@ -37,8 +37,10 @@ class CreateProductsTable extends Migration
             ->on('categories')
             ->onUpdate('cascade')
             ->onDelete('cascade');
-            $table->string('created_by');
-            $table->string('updated_by');
+            $table->boolean('isdelete');
+            $table->boolean('isdisplay');
+            $table->string('created_by')->nullable();
+            $table->string('updated_by')->nullable();
             $table->timestamps();
         });
     }
