@@ -6,14 +6,10 @@
 		<li class="breadcrumb-item"><a href="">Admin</a></li>
 		<li class="breadcrumb-item" ><a href="{{route('brand.index')}}" title="Danh mục">About</a></li>
 	</ol>
+	<!-- <h1 style=" font-family: 'Open Sans', sans-serif; font-size: 50px; font-weight: 300; text-transform: uppercase;">About</h1> -->
 </div>
 <div class="card">
-	<div class="card-header">
-		<b class="h4">About</b>
-	</div>
 	<div class="card-body">
-		<div class="page-header mt-2">
-		</div>
 		<div class="ml-3">
 			<p><b>Title: </b>{{$about->title}}</p>
 			<p><b>Logo: </b><img src="{{ asset('images/'.$about->logo) }}" width="80" height=></img></p>

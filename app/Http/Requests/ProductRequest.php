@@ -40,20 +40,20 @@ class ProductRequest extends FormRequest
     public function messages()
     {
         return [
-            'product_code.required'=>'Hãy nhập mã sản phẩm',
-            'product_code.max'=>'Độ dài tối đa là 100 ký tự',
-            'name.required'=>'Hãy nhập tên sản phẩm',
-            'name.max'=>'Độ dài tối đa là 100 ký tự',
-            'quantity.required'=>'Hãy nhập chất lượng sản phẩm',
-            'price.required'=>'Hãy nhập giá tiền sản phẩm',
-            'price.numeric'=>'Bạn nhập sai kiểu dữ liệu',
-            'promotion.required'=>'Hãy nhập khuyến mãi sản phẩm',
-            'promotion.numeric'=>'Bạn nhập sai kiểu dữ liệu',
-            'description.required'=>'Hãy nhập nội dung sản phẩm',
-            'description.max'=>'Độ dài tối đa là 500 ký tự',
-            'brand_id.required'=>'Hãy chọn nhãn hàng ',
-            'category_id.required'=>'Hãy chọn danh mục ',
-            'image.required'=>'Hãy chọn ảnh '
+            'product_code.required'=>'Please enter your product key.',
+            'product_code.max'=>'Maximum length is 100 characters.',
+            'name.required'=>'Please enter a product name.',
+            'name.max'=>'Maximum length is 100 characters.',
+            'quantity.required'=>'Please enter the product quality.',
+            'price.required'=>'Please enter the product price.',
+            'price.numeric'=>'You entered the wrong data type.',
+            'promotion.required'=>'Please enter product promotion.',
+            'promotion.numeric'=>'You entered the wrong data type.',
+            'description.required'=>'Please enter the product content.',
+            'description.max'=>'Maximum length is 500 characters.',
+            'brand_id.required'=>'Please select a brand. ',
+            'category_id.required'=>'Please select a category. ',
+            'image.required'=>'Please select a picture. '
 
         ];
     }

@@ -9,9 +9,6 @@
 	</ol>
 </div>
 <div class="card mt-3">
-	<div class="card-header">
-		<b class="h4">Edit category</b>
-	</div>
 	<div class="card-body col-md-12">
 		{{Form::open(['route'=>['category.update',$category->id],'method'=>'put'])}}
 		<input type="hidden" name="id" value="{{$category->id}}" placeholder="">
@@ -22,7 +19,9 @@
 		</div>
 		<div class="form-group col-12">
 			{{ Form::label('description','Description : ')}}
-			{{Form::textarea('description',$category->description,['class'=>'form-control col-md-8'])}}
+				<br>
+				<textarea name=description id="editor" cols="" rows="10" class="col-md-8"></textarea>
+				<br>
 			<span class="text-danger">{{ $errors->first('description')}}</span>
 		</div>
 	<div class="form-group col-md-12">

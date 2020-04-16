@@ -40,11 +40,11 @@ class CategoryRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required'=>'Hãy nhập tên danh mục',
-            'name.unique' => 'Tên danh mục đã tồn tại',
-            'name.max'=>'Độ dài tối đa là 100 ký tự',
-            'description.required'=>'Hãy nhập mô tả',
-            'description.max'=>'Độ dài tối đa là 500 ký tự'
+            'name.required'=>'Please enter a category name.',
+            'name.unique' => 'Category name already exists.',
+            'name.max'=>'Maximum length is 100 characters.',
+            'description.required'=>'Please enter a description.',
+            'description.max'=>'Maximum length is 500 characters.'
         ];
     }
 }

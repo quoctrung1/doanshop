@@ -1,7 +1,13 @@
 @extends('admin.layout.main')
 @section('title','Brand')
 @section('content')
-<div class="row">
+<div class="page-header">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a href="">Admin</a></li>
+		<li class="breadcrumb-item active" >Brand</li>
+	</ol>
+</div>
+<div class="row ml-1 col-md-12">
 	@if (Session::has('message'))
 	<p class="alert alert-success">{{ Session::get('message')}}</p> 
 	@elseif(Session::has('err'))    
@@ -9,9 +15,6 @@
 	@endif
 </div>
 <div class="card">
-	<div class="card-header">
-		<h1>Brand</h1>
-	</div>
 	<div class="card-body">
 		<div class="row">
 			<div class="col-md-9">
@@ -20,7 +23,7 @@
 			<div class="col-md-3">
 				<form action="">
 					<div class="form-group">
-						{{Form::text('name','',['class'=>'form-control','placeholder'=>'Search name ... '])}}
+						{{Form::text('name','',['class'=>'form-control','placeholder'=>'Search ...'])}}
 					</div>
 				</form>
 			</div>
@@ -42,12 +45,10 @@
 						<td ><a href="{{route('brand.show',$brand->id)}}" style="text-decoration: none;color: black;">{{ $brand->name }}</a> </td>
 						<td>{{$brand->slug}}</td>
 						<td colspan="5">
-							<div class="row">
-								{{Form::open(['route' => ['brand.destroy', $brand->id], 'method' => 'DELETE'])}}
-		                        {{ Form::button('<i class="fa fa-trash text-danger"></i>', ['type' => 'submit', 'class' => 'text-danger border-0 btn-link float-left'] )  }} 
-		                        {{ Form::close() }}
-								<a href="{{route('brand.edit',$brand->id)}}" class="ml-1"><i class="fa fa-edit "></i></a>
-							</div>
+							{{Form::open(['route' => ['brand.destroy', $brand->id], 'method' => 'DELETE'])}}
+							{{ Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'text-danger border-0 btn-link float-left'] )  }} 
+							{{ Form::close() }}
+							<a href="{{route('brand.edit',$brand->id)}}" class="ml-1"><i class="fa fa-edit "></i></a>
 						</td>
 					</tr>
 					@endforeach

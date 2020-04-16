@@ -15,13 +15,18 @@
 	@endif
 </div>
 <div class="card">
-	<div class="card-header">
-		<b class="h4">About</b>
-	</div>
+	
 	<div class="card-body ">
 		<div class="row">
-			<div class="col-9">
+			<div class="col-md-9">
 				<a href="{{route('slide.create')}}" class="btn btn-outline-success mb-2 mt-2">Create New</a>
+			</div>
+			<div class="col-md-3">
+				<form action="">
+					<div class="form-group">
+						{{Form::text('name','',['class'=>'form-control','placeholder'=>'Search ... '])}}
+					</div>
+				</form>
 			</div>
 		</div>
 		<table class="table table-striped table-sm">
@@ -40,13 +45,14 @@
 				<tr>
 					<td >{{ ++$key }}</td>
 					<td>{{$slides->link}}</td>
-					<td>{{$slides->url_img}}</td>
+					<td><img src="{{ asset('images/'.$slides->url_img) }}" width="80" height=></img>
+						</td>
 					<td>{{$slides->display_order}}</td>
 					<td colspan="5">
 						{{Form::open(['route' => ['slide.destroy', $slides->id], 'method' => 'DELETE'])}}
-						{{ Form::button('<i class="fas fa-trash-alt text-danger " ></i>', ['type' => 'submit', 'class' => 'text-danger border-0 btn-link float-left'] )  }} 
+						{{ Form::button('<i class="fa fa-trash text-danger " ></i>', ['type' => 'submit', 'class' => 'text-danger border-0 btn-link float-left'] )  }} 
 						{{ Form::close() }}
-						<a href="{{route('slide.edit',$slides->id)}}" class="ml-1"><i class="far fa-edit "></i></a></a>
+						<a href="{{route('slide.edit',$slides->id)}}" class="ml-1"><i class="fa fa-edit "></i></a></a>
 					</td>
 				</tr>
 				@endforeach

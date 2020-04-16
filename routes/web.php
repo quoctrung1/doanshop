@@ -40,8 +40,8 @@ Route::get('/', function () {
 // END USER
 
 // ---------------------------------------------
-Route::get('/test', function () {
-    return view('admin.layouts.master');
+Route::get('admin/home', function () {
+    return view('admin.homeadmin');
 });
 
 // CART

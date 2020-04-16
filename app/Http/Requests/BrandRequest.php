@@ -40,11 +40,11 @@ class BrandRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required'=>'Hãy nhập tên nhãn hiệu',
-            'name.unique' => 'Tên nhãn hiệu đã tồn tại',
-            'name.max'=>'Độ dài tối đa là 100 ký tự',
-            'description.required'=>'Hãy nhập mô tả',
-            'description.max'=>'Độ dài tối đa là 500 ký tự'
+            'name.required'=>'Please enter a brand name.',
+            'name.unique' => 'Brand name already exists.',
+            'name.max'=>'Maximum length is 255 characters.',
+            'description.required'=>'Please enter a description.',
+            'description.max'=>'Maximum length is 500 characters.'
         ];
     }
 }

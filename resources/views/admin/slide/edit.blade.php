@@ -20,13 +20,11 @@
 				{{ Form::text('link',$slide->link,['class'=>'form-control'])}}
 				<span class="text-danger">{{ $errors->first('link')}}</span>
 			</div>
-
-			<div class="form-group col-6 {{ $errors->has('url_img') ?'has-error':'' }}">
-				{{ Form::label('url_img','Url img : ')}}
-				{{ Form::text('url_img',$slide->url_img,['class'=>'form-control'])}}
-				<span class="text-danger">{{ $errors->first('url_img')}}</span>
-			</div>	
-
+			<div class="form-group col-md-6 {{ $errors->has('url_img') ?'has-error':'' }}">
+				{{Form::label('Url img:','',['class'=>''])}}
+				<input multiple="multiple" name="url_img" type="file" class="form-control">
+				<span class="text-danger">{{ $errors->first('url_img')}}</span>		
+			</div>
 			<div class="form-group col-6 {{ $errors->has('display_order') ?'has-error':'' }}">
 				{{ Form::label('display_order','DisPlay Order : ')}}
 				{{ Form::text('display_order',$slide->display_order,['class'=>'form-control'])}}

@@ -7,12 +7,10 @@
 		<li class="breadcrumb-item" ><a href="{{route('about.index')}}" title="Danh mục">About</a></li>
 		<li class="breadcrumb-item active">Create</li>
 	</ol>
+	<!-- <h1 style=" font-family: 'Open Sans', sans-serif; font-size: 50px; font-weight: 300; text-transform: uppercase;">About</h1> -->
 </div>
 <div class="">
 	<div class="card">
-		<div class="card-header">
-		<b class="h4">About</b>
-	</div>
 		<div class="card-body">
 			{{ Form::open(['url' => 'admin/about', 'method' => 'post','enctype '=>'multipart/form-data']) }}
 			<div class="row ">

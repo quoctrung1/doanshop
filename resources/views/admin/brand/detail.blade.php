@@ -9,9 +9,6 @@
 	</ol>
 </div>
 <div class="card">
-	<div class="card-header">
-		<b class="h4">Detail brand</b>
-	</div>
 	<div class="card-body col-md-12">
 		<p><b>Tên nhãn hiệu : </b>{{$brand->name}}</p>
 		<p style="width: 1000px;"><b>Mô tả : </b>{{$brand->description}}</p>

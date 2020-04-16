@@ -6,6 +6,7 @@
 		<li class="breadcrumb-item"><a href="">Admin</a></li>
 		<li class="breadcrumb-item active">About</li>
 	</ol>
+	<!-- <h1 style=" font-family: 'Open Sans', sans-serif; font-size: 50px; font-weight: 300; text-transform: uppercase;">About</h1> -->
 </div>
 <div class="row ml-1">
 	@if (Session::has('message'))
@@ -15,15 +16,18 @@
 	@endif
 </div>
 <div class="card">
-	<div class="card-header">
-		<b class="h4">About</b>
-	</div>
 	<div class="card-body ">
 		<div class="row">
-			<div class="col-9">
+			<div class="col-md-9">
 				<a href="{{route('about.create')}}" class="btn btn-outline-success mb-2 mt-2">Create New</a>
 			</div>
-			<div class="col-md-3">search</div>
+			<div class="col-md-3">
+				<form action="">
+					<div class="form-group">
+						{{Form::text('name','',['class'=>'form-control','placeholder'=>'Search ...'])}}
+					</div>
+				</form>
+			</div>
 		</div>
 		<table class="table table-striped table-sm">
 			<thead>
@@ -42,7 +46,7 @@
 					@foreach($abouts as $key => $about)
 					<tr>
 						<td >{{ ++$key }}</td>
-						<td>{{$about->title}}</td>
+						<td><a href="{{route('about.show',$about->id)}}" style="text-decoration: none;color: black;">{{$about->title}}</td>
 						<td>{{$about->phone}}</td>
 						<td>{{$about->content}}</td>
 						<td>{{$about->email}}</td>
@@ -50,10 +54,9 @@
 						</td>
 						<td colspan="5">
 							{{Form::open(['route' => ['about.destroy', $about->id], 'method' => 'DELETE'])}}
-							{{ Form::button('<i class="fas fa-trash-alt text-danger " ></i>', ['type' => 'submit', 'class' => 'text-danger border-0 btn-link float-left'] )  }} 
+							{{ Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'text-danger border-0 btn-link float-left'] )  }} 
 							{{ Form::close() }}
-							<a href="{{route('about.edit',$about->id)}}" class="ml-1"><i class="far fa-edit "></i></a>
-							<a href="{{route('about.show',$about->id)}}" class="ml-1"><i class="fas fa-info-circle"></i></a>
+							<a href="{{route('about.edit',$about->id)}}" class="ml-1"><i class="fa fa-edit "></i></a>
 						</td>
 					</tr>
 					@endforeach

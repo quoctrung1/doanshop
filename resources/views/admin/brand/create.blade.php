@@ -1,11 +1,15 @@
 @extends('admin.layout.main')
-@section('title','Brand')
+@section('title','Create Brand')
 @section('content')
+<div class="page-header">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a href="">Admin</a></li>
+		<li class="breadcrumb-item" ><a href="{{route('brand.index')}}" title="Danh mục">Brand</a></li>
+		<li class="breadcrumb-item active">Create</li>
+	</ol>
+</div>
 <div class="card">
-	<div class="card-header">
-		<h1>Brand</h1>
-	</div>
-	<div class="row">
+	<div class="card-body col-md-12">
 		{{ Form::open(['url' => 'admin/brand', 'method' => 'post']) }}
 		<div class="form-group col-md-12">
 			{{ Form::label('name','Name : ')}}

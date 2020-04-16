@@ -41,11 +41,9 @@ class AboutController extends Controller
      */
     public function store(AboutRequest $request)
     {
-
-        
         if($request->hasFile('logo')){
             $logo=$request->logo->getClientOriginalName();
-            $request->logo->move('image', $logo);
+            $request->logo->move('images', $logo);
             $about = new About;
             $about->title = $request->title;
             $about->phone = $request->phone;
@@ -104,8 +102,8 @@ class AboutController extends Controller
         $about->updated_at = Carbon::now()->toDateTimeString() ;
         $about->update();
     }
-        return redirect('admin/about')->with('message','Edit successfully!'); 
-    }
+    return redirect('admin/about')->with('message','Edit successfully!'); 
+}
 
     /**
      * Remove the specified resource from storage.

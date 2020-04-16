@@ -8,8 +8,6 @@ use Session;
 use App\Http\Requests\SlideRequest;
 use Carbon\Carbon;
 use DB;
-
-
 class SlideController extends Controller
 {
     /**
@@ -44,22 +42,25 @@ class SlideController extends Controller
      */
     public function store(SlideRequest $request)
     {
+      
+      if($request->hasFile('url_img')){
+        $url_img=$request->url_img->getClientOriginalName();
+        $request->url_img->move('images', $url_img);
         $slide = new Slide;
-        $slide->link = $request->link;
-        $slide->url_img = $request->url_img;
+        $slide->link = $request->link;;
         $slide->display_order = $request->display_order;
+        $slide->url_img = $url_img;
         $slide->updated_at = null;
         $slide->isdelete = false;
         $slide->isdisplay = false;
         $slide->save();
-        if ($slide){
-            return redirect('/admin/slide')->with('message','Create Newsuccessfully!');
-        }else{
-            return back()->with('err','Save error!');
+            if ($slide){
+                 return redirect('/admin/slide')->with('message','Create Newsuccessfully!');
+            }else{
+               return back()->with('err','Save error!');
+            }
         }
     }
-
-    
 
     /**
      * Display the specified resource.
@@ -95,7 +96,6 @@ class SlideController extends Controller
      */
     public function update(SlideRequest $request, $id)
      {
-        
         $slide = Slide::findOrFail($id);
         if (isset($slide))
         {
@@ -105,7 +105,6 @@ class SlideController extends Controller
         $slide->updated_at = Carbon::now()->toDateTimeString();
         $slide->isdelete = false;
         $slide->isdisplay = false;
-
         $slide->update();
         }else{
             return back()->with('err','Save error!');

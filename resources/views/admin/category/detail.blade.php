@@ -9,9 +9,6 @@
 	</ol>
 </div>
 <div class="card mt-3">
-	<div class="card-header">
-		<b class="h4">Detail category</b>
-	</div>
 	<div class="card-body col-md-12">
 		<p><b>Tên nhãn hiệu : </b>{{$category->name}}</p>
 		<p style="width: 1000px;"><b>Mô tả : </b>{{$category->description}}</p>

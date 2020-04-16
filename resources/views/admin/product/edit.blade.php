@@ -9,9 +9,6 @@
 	</ol>
 </div>
 <div class="card">
-	<div class="card-header">
-		<b class="h4">Edit product</b>
-	</div>
 	<div class="card-body ">
 		{{Form::model($product,['route' => ['product.update',$product->id],'method' => 'put','enctype '=>'multipart/form-data'])}}
 	<div class="row">
@@ -28,7 +25,9 @@
 			</div>
 			<div class="form-group">
 				{{ Form::label('description','Mô tả : ')}}
-				{{ Form::textarea('description',$product->description,['class'=>'form-control','rows' => 4])}}
+				<br>
+				<textarea name=description id="editor" cols="" rows="10" class="col-md-8"></textarea>
+				<br>
 				<span class="text-danger">{{ $errors->first('description')}}</span>
 			</div>
 			<div class="form-group">
@@ -57,14 +56,14 @@
 			</div>
 			<div class="form-group">
 				{{Form::label('Nhà sản xuất:')}}
-				{{Form::select('brand_id',$brand,$product->brand_id,['class' => " form-control",'placeholder'=>'Chọn nhà sản xuất'])}}
+				{{Form::select('brand_id',$brand,$product->brand_id,['class' => " form-control",'placeholder'=>'Choose a manufacturer'])}}
 				@if ($errors->has('brand_id'))
 				<div class="text-danger">{{ $errors->first('brand_id') }}</div>
 				@endif
 			</div>
 			<div class="form-group">
 				{{Form::label('Thể loại:')}}
-				{{Form::select('category_id',$category,$product->category_id,['class' => " form-control",'placeholder'=>'Chọn thể loại'])}}
+				{{Form::select('category_id',$category,$product->category_id,['class' => " form-control",'placeholder'=>'Choose a category'])}}
 				@if ($errors->has('category_id'))
 				<div class="text-danger">{{ $errors->first('category_id') }}</div>
 				@endif

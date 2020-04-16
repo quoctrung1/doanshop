@@ -15,9 +15,6 @@
 	@endif
 </div>
 <div class="card">
-	<div class="card-header">
-		<b class="h4">Product</b>
-	</div>
 	<div class="card-body col-md-12">
 		<div class="row">
 			<div class="col-md-9">
@@ -26,7 +23,7 @@
 			<div class="col-md-3">
 				<form action="">
 					<div class="form-group">
-						{{Form::text('name','',['class'=>'form-control','placeholder'=>'Name'])}}
+						{{Form::text('name','',['class'=>'form-control','placeholder'=>'Search ...'])}}
 					</div>
 				</form>
 			</div>
@@ -56,10 +53,9 @@
 					<td class="">{{$product->quantity}}</td>
 					<td>
 						{{Form::open(['route' => ['product.destroy', $product->id], 'method' => 'DELETE'])}}
-						{{ Form::button('<i class="fas fa-trash-alt text-danger "></i>', ['type' => 'submit', 'class' => 'text-danger border-0 btn-link float-left'] )  }}
+						{{ Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'text-danger border-0 btn-link float-left'] )  }} 
 						{{ Form::close() }}
-						<!-- <a href="{{route('product.show',$product->id)}}"><i class="fas fa-info text-info ml-2 mr-2"></i></a> -->
-						<a href="{{route('product.edit',$product->id)}}"><i class="far fa-edit "></i></a>
+						<a href="{{route('product.edit',$product->id)}}" class="ml-1"><i class="fa fa-edit "></i></a>
 					</td>
 				</tr>
 				@endforeach
