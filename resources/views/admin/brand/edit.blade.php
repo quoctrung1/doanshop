@@ -19,9 +19,9 @@
 		</div>
 		<div class="form-group col-12">
 			{{ Form::label('description','Description : ')}}
-				<br>
-				<textarea name=description id="editor" cols="" rows="10" class="col-md-8"></textarea>
-				<br>
+			<br>
+			<textarea name=description id="editor" cols="" rows="10" class="col-md-8">{{ $brand->description }}</textarea>
+			<br>
 			<span class="text-danger">{{ $errors->first('description')}}</span>
 		</div>
 		<div class="form-group col-md-12">

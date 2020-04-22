@@ -26,17 +26,32 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {
-        $products = Product::orderBy('created_at', 'desc')->get();
+    { 
+        $products = DB::table('products')->where('isdelete',false)->orderBy('created_at', 'desc');
         $categories = $this->getCategory();
+
         if ($request->name) {
-            $products = Product::where('name','like','%'.$request->name.'%')->get(); 
+            $products = DB::table('products')->where('name', 'like', '%'.$request->name.'%');
         }
-        if($request->cate)
-        {
-            $products->where('category_id',$request->cate);
+        if ($request->categoryid) {
+            $products = $products->where('category_id', $request->categoryid);
         }
-        return view('admin.product.index',compact('products'));
+        $products = $products->paginate(3)->appends(request()->query());
+        // if($searchName || $searchCategory ){
+        //     $products = Product::when($searchName, function ($query) use ($searchName) {
+        //         return $query->where('name', 'like', "%{$searchName}%")->where('isdelete',false)->get(); 
+        //     })
+        //     ->when($searchCategory, function ($query) use ($searchCategory) {
+        //         return $query->whereHas('Category', function ($query) use ($searchCategory) {
+        //             $query->where('category_id', $searchCategory);
+        //         });
+        //     })  
+        //     ->paginate(3)
+        //     ->appends(request()->query());
+        // }else{
+        //     $products = Product::paginate(3);
+        // }
+        return view('admin.product.index',compact('products','categories'));
     }
 
     /**
@@ -46,8 +61,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $brand = Brand::pluck('name','id')->toArray();
-        $category = Category::pluck('name','id')->toArray();
+        $brand = Brand::where('isdelete',false)->pluck('name','id')->toArray();
+        $category = Category::where('isdelete',false)->pluck('name','id')->toArray();
         return view('admin.product.create',compact('brand','category'));
     }
 
@@ -108,8 +123,8 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::findOrfail($id);
-        $brand = Brand::pluck('name','id')->toArray();
-        $category = Category::pluck('name','id')->toArray();
+        $brand = Brand::where('isdelete',false)->pluck('name','id')->toArray();
+        $category = Category::where('isdelete',false)->pluck('name','id')->toArray();
         return view('admin.product.edit',compact('brand','category','product'));
     }
 
@@ -157,21 +172,20 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        $product = Product::findOrFail($id);
-        if ($product) {
-            $product->delete();
-            return back()->with('message','Delete success!');
-        } else {
-            return back()->with('err','Delete failse!');
-        }  
+    public function destroy(Request $request)
+    {  
+       $product = Product::findOrFail($request->id);
+       if ($product) {
+        $product->isdelete = true;
+        $product->update();
+    } 
+  return redirect("admin/product")->with('message','Delete successfully!'); 
+}
+  public function setvalue(Request $request)
+  {
+    if ($request->ajax()) {
+        $value = class_basename($request->value);
+        return Response($value);
     }
-    public function setvalue(Request $request)
-    {
-        if ($request->ajax()) {
-            $value = class_basename($request->value);
-            return Response($value);
-        }
-    }
+}
 }

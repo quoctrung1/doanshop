@@ -18,15 +18,24 @@ Route::get('admin/home', function() {
 });
 
 Route::resource('admin/about','AboutController');
+// Định dạng lại destroy
+Route::delete('about_delete_modal', 'AboutController@destroy')->name('about_delete_modal');
 Route::resource('admin/brand','BrandController');
+// Định dạng lại destroy
+Route::delete('brand_delete_modal', 'BrandController@destroy')->name('brand_delete_modal');
 Route::resource('admin/category','CategoryController');
+// Định dạng lại destroy
+Route::delete('category_delete_modal', 'CategoryController@destroy')->name('category_delete_modal');
 Route::resource('admin/comment','CommentController');
 Route::resource('admin/image','ImageController');
 Route::resource('admin/order','OrderController');
 Route::resource('admin/orderdetail','OrderDetailController');
 Route::resource('admin/product','ProductController');
+// Định dạng lại destroy
+Route::delete('product_delete_modal', 'ProductController@destroy')->name('product_delete_modal');
 Route::resource('admin/slide','SlideController');
-
+// Định dạng lại destroy
+Route::delete('slide_delete_modal', 'SlideController@destroy')->name('slide_delete_modal');
 Route::get('/setvalue', 'ProductController@setvalue');
 // END ADMIN
 

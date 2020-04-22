@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
-   
+
     /**
      * Display a listing of the resource.
      *
@@ -19,11 +19,11 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
-        $categories = Category::all();
-        $categories= DB::table('categories')->paginate(4);
-        if ($request->name) {
-            $categories = Category::where('name','like','%'.$request->name.'%')->get(); 
+        if ($request->seachname != null) {
+            $categories = Category::where('name','like','%'.$request->seachname.'%')->where('isdelete',false)->get();
+            return view('admin.category.index',compact('categories'));
         }
+        $categories = Category::where('isdelete',false)->get();
         return view('admin.category.index',compact('categories'));
     }
 
@@ -46,7 +46,6 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        //  
         $request->validated();
         $category = new Category;
         $category->name = $request->name;
@@ -62,7 +61,6 @@ class CategoryController extends Controller
             return back()->with('err','Save error!');
         }
     }
-
     /**
      * Display the specified resource.
      *
@@ -83,7 +81,6 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        
         $category = Category::findOrFail($id);
         return view('admin.category.edit',compact('category'));
     }
@@ -121,15 +118,19 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $category = Category::findOrFail($id);
-        $product = Product::where('category_id', '=', $category->id)->get();
+        $category = Category::findOrFail($request->id); 
+        $product = Product::where('category_id',$category->id)->where('isdelete',false)->get();
         if ($category && $product->count()==0){
-            $category->delete();
+            $category->isdelete = true;
+            $category->update();
         }else{
-            return redirect("admin/category")->with('message','Dữ liệu đang được sử dụng bên sản phẩm!');
+            return redirect("admin/category")->with('message','
+                Data is being used on the product side!');
         }
-        return redirect("admin/category")->with('message','Xóa thành công');
+        return redirect("admin/category")->with('message','Delete successfully!');
     }
+    
+
 }

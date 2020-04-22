@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 
 class BrandController extends Controller
 {
-   
+
     /**
      * Display a listing of the resource.
      *
@@ -20,13 +20,11 @@ class BrandController extends Controller
      */
     public function index(Request $request)
     {
-        //1.Lay du lieu trong Model
-        $brands= DB::table('brands')->paginate(4);
-        $brands = Brand::all();
-        if ($request->name) {
-            $brands = Brand::where('name','like','%'.$request->name.'%')->get(); 
+        if ($request->seachname != null) {
+            $brands = Brand::where('name','like','%'.$request->seachname.'%')->where('isdelete',false)->get();
+            return view('admin.brand.index',compact('brands'));
         }
-        //2.Do du lieu ra view
+        $brands = Brand::where('isdelete',false)->get();
         return view('admin.brand.index',compact('brands'));
     }
 
@@ -115,7 +113,7 @@ class BrandController extends Controller
             return back()->with('err','Save error!');
         }
         return redirect('admin/brand')->with('message','Edit successfully!');
-  }
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -123,15 +121,17 @@ class BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $brand = Brand::findOrFail($id);
-        $product = Product::where('brand_id', '=', $brand->id)->get();
+        $brand = Brand::findOrFail($request->id);
+        $product = Product::where('brand_id',$brand->id)->where('isdelete',false)->get();
         if ($brand && $product->count()==0){
-            $brand->delete();
+            $brand->isdelete = true;
+            $brand->update();
         }else{
-            return redirect("admin/brand")->with('message','Dữ liệu đang được sử dụng bên sản phẩm!');
+            return redirect("admin/brand")->with('message','
+                Data is being used on the product side!');
         }
-        return redirect("admin/brand")->with('message','Xóa thành công');
+        return redirect("admin/brand")->with('message','Delete successfully!');
     }
 }

@@ -17,8 +17,8 @@ class AboutController extends Controller
     {
         $abouts= DB::table('abouts')->paginate(4);
         $abouts = About::all();
-        if ($request->name) {
-            $brands = About::where('title','like','%'.$request->name.'%')->get(); 
+        if ($request->seachtitle) {
+            $abouts = About::where('title','like','%'.$request->seachtitle.'%')->get(); 
         }
         return view('admin.about.index',compact('abouts'));
     }
@@ -40,24 +40,26 @@ class AboutController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(AboutRequest $request)
+
     {
-        if($request->hasFile('logo')){
-            $logo=$request->logo->getClientOriginalName();
-            $request->logo->move('images', $logo);
-            $about = new About;
-            $about->title = $request->title;
-            $about->phone = $request->phone;
-            $about->content = $request->content;
-            $about->email = $request->email;
-            $about->logo = $logo;
-            $about->save();
-            if ($about){
-                return redirect('/admin/about')->with('message','Create New successfully!');
-            }else{
-                return back()->with('err','Save error!');
-            }
+       $request->validated();
+       if($request->hasFile('logo')){
+        $logo=$request->logo->getClientOriginalName();
+        $request->logo->move('images', $logo);
+        $about = new About;
+        $about->title = $request->title;
+        $about->phone = $request->phone;
+        $about->content = $request->content;
+        $about->email = $request->email;
+        $about->logo = $logo;
+        $about->save();
+        if ($about){
+            return redirect('/admin/about')->with('message','Create New successfully!');
+        }else{
+            return back()->with('err','Save error!');
         }
     }
+}
     /**
      * Display the specified resource.
      *
@@ -89,31 +91,44 @@ class AboutController extends Controller
      */
     public function update(AboutRequest $request, $id)
     {
-
-      $about = About::findOrFail($id);
-      if($request->hasFile('logo')){
-        $logo=$request->logo->getClientOriginalName();
-        $request->logo->move('images', $logo);
-        $about->title = $request->title;
-        $about->phone = $request->phone;
-        $about->content = $request->content;
-        $about->email = $request->email;
-        $about->logo = $logo;
-        $about->updated_at = Carbon::now()->toDateTimeString() ;
-        $about->update();
+        $about =About::findOrFail($id);
+        $request->validated();
+        if($about){
+            if($request->hasFile('logo') != null){
+                $logo=$request->logo->getClientOriginalName();
+                $request->logo->move('images', $logo);
+                $about->title = $request->title;
+                $about->phone = $request->phone;
+                $about->content = $request->content;
+                $about->email = $request->email;
+                $about->logo = $logo;
+                $about->updated_at = Carbon::now()->toDateTimeString() ;
+                $about->update();
+                return redirect('admin/about')->with('message','Edit successfully!');
+            }else{
+                $about->title = $request->title;
+                $about->phone = $request->phone;
+                $about->content = $request->content;
+                $about->email = $request->email;
+                $about->logo = $request->logo;
+                $about->updated_at = Carbon::now()->toDateTimeString() ;
+                $about->update();
+                return redirect('admin/about')->with('message','Edit successfully!');
+            }
+        }else{
+            return redirect('admin/about
+                ')->with('message','Edit err!');
+        }    
     }
-    return redirect('admin/about')->with('message','Edit successfully!'); 
-}
-
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $about = About::findOrFail($id);
+        $about = About::findOrFail($request->id);
         if ($about){
             $about->delete();
         }
