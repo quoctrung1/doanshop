@@ -1,4 +1,4 @@
-CKEDITOR.editorConfig = FUNCTION(config) {
+CKEDITOR.editorConfig = function( config ) {
     config.filebrowserBrowseUrl = '/kcfinder/browse.php?opener=ckeditor&type=files';
     config.filebrowserImageBrowseUrl = '/kcfinder/browse.php?opener=ckeditor&type=images';
  

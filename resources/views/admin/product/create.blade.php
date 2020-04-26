@@ -1,5 +1,5 @@
 @extends('admin.layout.main')
-@section('title','Product')
+@section('title','Create Product')
 @section('content')
 <div class="page-header">
 	<ol class="breadcrumb">
@@ -11,8 +11,11 @@
 <div class="card">
 	<div class="card-body">
 		{{ Form::open(['url' => 'admin/product', 'method' => 'post','enctype '=>'multipart/form-data']) }}
-		<div class="row">
-			<div class="col-8">
+		<div class="row form-group">
+			<div class="col-md-12">
+				<div class="form-group">
+					<h3 class="text-center">Product</h3>
+				</div>
 				<div class="form-group">
 					{{ Form::label('Product Code : ')}}
 					{{ Form::text('product_code',uniqid(),['class'=>'form-control', 'readonly'=>'readonly'])}}
@@ -32,11 +35,9 @@
 				</div>
 				<div class="form-group">
 					{{ Form::label('Image:') }} <br/>
-					{{ Form::file('image',['class' => 'form-control', 'id' => 'filename']) }}
+					{{ Form::file('image[]',['class' => 'form-control', 'id' => 'filename','multiple']) }}
 					<span class="text-danger">{{ $errors->first('image')}}<br> </span>
 				</div>	
-			</div>
-			<div class="col-4">
 				<div class="form-group">
 					{{ Form::label('Price : ')}}
 					{{ Form::number('price','',['class'=>'form-control'])}}
@@ -68,7 +69,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="form-group">
+		<div class="form-group row">
 			{{ Form::submit('Save',['class'=>'btn btn-success']) }}
 			<a class="btn btn-danger" href="{{route('product.index')}}">Back</a>
 		</div>

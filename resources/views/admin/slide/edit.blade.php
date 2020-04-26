@@ -10,7 +10,7 @@
 </div>
 <div class="card">
 	<div class="card-body">	
-		{{Form::model($slide,['route'=>['slide.update',$slide->id],'method'=>'put','enctype '=>'multipart/form-data']) }}
+		{{Form::open(['route'=>['slide.update',$slide->id],'method'=>'put'])}}
 		<div class="row ">
 			<div class="form-group col-6 {{ $errors->has('link') ?'has-error':'' }}">
 				{{ Form::label('link','Link : ') }}
@@ -19,9 +19,8 @@
 			</div>
 			<div class="form-group col-6 {{ $errors->has('url_img') ?'has-error':'' }}">
 				{{ Form::label('Url img:','',['class'=>'']) }}
-
-				{{ Form::file('url_img',['class' => 'form-control', 'id' => 'filename']) }}
-				{{ Form::hidden('url_img' ,$slide->url_img, ['class' => 'form-control','id' => 'image_file' ]) }}
+				{{ Form::file('image',['class' => 'form-control', 'id' => 'filename']) }}
+				{{ Form::hidden('url_img', $slide->url_img, ['class' => 'form-control','id' => 'image_file' ]) }}
 				<p id="path">{{ $slide->url_img }}</p>
 				<span class="text-danger">{{ $errors->first('url_img')}}</span>		
 			</div>

@@ -22,7 +22,7 @@ class CreateProductsTable extends Migration
             $table->integer('price');
             $table->string('slug');
             $table->integer('quantity');
-            $table->integer('promotion');
+            $table->integer('promotion')->nullable();
             
             $table->bigInteger('brand_id')->unsigned();
             $table->foreign('brand_id')

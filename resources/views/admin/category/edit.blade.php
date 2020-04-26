@@ -19,16 +19,16 @@
 		</div>
 		<div class="form-group col-12">
 			{{ Form::label('description','Description : ')}}
-			<br>
-			<textarea name=description id="editor" cols="" rows="10" class="col-md-8">{{ $category->description }}</textarea>
-			<br>
+				<br>
+				<textarea name=description id="editor" cols="" rows="10" class="col-md-8">{{$category->description}}</textarea>
+				<br>
 			<span class="text-danger">{{ $errors->first('description')}}</span>
 		</div>
-		<div class="form-group col-md-12">
-			{{ Form::submit('Update',['class'=>'btn btn-success']) }}
-			<a class="btn btn-danger" href="{{route('category.index')}}">Back</a>
-		</div>
-		{{ Form::close() }}
+	<div class="form-group col-md-12">
+		{{ Form::submit('Update',['class'=>'btn btn-success']) }}
+		<a class="btn btn-danger" href="{{route('category.index')}}">Back</a>
+	</div>
+	{{ Form::close() }}
 	</div>
 </div>
 @endsection

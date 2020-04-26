@@ -26,7 +26,7 @@ class SlideRequest extends FormRequest
         return [
             'link' => 'required',
             'url_img' => 'required',
-            'display_order' => 'required|numeric|',
+            'display_order' => 'required',
         ];
     }
     public function messages()
@@ -34,8 +34,7 @@ class SlideRequest extends FormRequest
         return [
            'link.required' => 'Please Enter Information.',
             'url_img.required' => 'Please Enter Information.',
-            'display_order.required' => 'Please Enter Information.',
-            'display_order.numeric' => 'Enter only numbers.'
+            'display_order.required' => 'Please Enter Information.'
         ];
     }
 }

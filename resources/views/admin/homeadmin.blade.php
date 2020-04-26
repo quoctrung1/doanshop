@@ -38,44 +38,63 @@
                     <div class="panel panel-headline">
                         <div class="panel-heading">
                             <h3 class="panel-title">Weekly Overview</h3>
-                            <p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
+                            <p class="panel-subtitle" id="hvn"></p>
                         </div>
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="metric">
-                                        <span class="icon"><i class="fa fa-download"></i></span>
-                                        <p>
-                                            <span class="number">1,252</span>
-                                            <span class="title">Downloads</span>
-                                        </p>
+                                        <a href="{{route('product.index')}}">
+                                            <span class="icon"><i class="fa fa-shopping-cart"></i></span>
+                                            <p>
+                                                <span class="number" style="color: #676A6D">560</span>
+                                                <span class="title">Product</span>
+                                            </p>
+                                        </a>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="metric">
-                                        <span class="icon"><i class="fa fa-shopping-bag"></i></span>
+                                        <a href="{{route('category.index')}}">
+                                        <span class="icon"><i class="fa fa-list-alt"></i></span>
                                         <p>
-                                            <span class="number">203</span>
-                                            <span class="title">Sales</span>
+                                            <span class="number" style="color: #676A6D">3</span>
+                                            <span class="title">Category</span>
                                         </p>
+                                        </a>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="metric">
-                                        <span class="icon"><i class="fa fa-eye"></i></span>
+                                        <a href="{{route('brand.index')}}">
+                                        <span class="icon"><i class="fa fa-tags"></i></span>
                                         <p>
-                                            <span class="number">274,678</span>
-                                            <span class="title">Visits</span>
+                                            <span class="number" style="color: #676A6D">16</span>
+                                            <span class="title">Brand</span>
                                         </p>
+                                        </a>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="metric">
-                                        <span class="icon"><i class="fa fa-bar-chart"></i></span>
+                                        <a href="{{route('about.index')}}">
+                                        <span class="icon"><i class="fa fa-users"></i></span>
                                         <p>
-                                            <span class="number">35%</span>
-                                            <span class="title">Conversions</span>
+                                            <span class="number" style="color: #676A6D">5</span>
+                                            <span class="title">About</span>
                                         </p>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="metric">
+                                        <a href="{{route('slide.index')}}">
+                                        <span class="icon"><i class="fa fa-link"></i></span>
+                                        <p>
+                                            <span class="number" style="color: #676A6D">1425</span>
+                                            <span class="title">Slide</span>
+                                        </p>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -400,6 +419,11 @@
     <script src="{{asset('assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js')}}"></script>
     <script src="{{asset('assets/vendor/chartist/js/chartist.min.js')}}"></script>
     <script src="{{asset('assets/scripts/klorofil-common.js')}}"></script>
+    <script>
+     var today = new Date();
+     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+     document.getElementById("hvn").innerHTML = time;
+    </script>
     <script>
     $(function() {
         var data, options;

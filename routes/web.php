@@ -17,52 +17,39 @@ Route::get('admin/home', function() {
 	return view('admin.homeadmin');
 });
 
-Route::resource('admin/about','AboutController');
-// Định dạng lại destroy
-Route::delete('about_delete_modal', 'AboutController@destroy')->name('about_delete_modal');
-Route::resource('admin/brand','BrandController');
-// Định dạng lại destroy
-Route::delete('brand_delete_modal', 'BrandController@destroy')->name('brand_delete_modal');
-Route::resource('admin/category','CategoryController');
-// Định dạng lại destroy
-Route::delete('category_delete_modal', 'CategoryController@destroy')->name('category_delete_modal');
-Route::resource('admin/comment','CommentController');
-Route::resource('admin/image','ImageController');
-Route::resource('admin/order','OrderController');
-Route::resource('admin/orderdetail','OrderDetailController');
-Route::resource('admin/product','ProductController');
-// Định dạng lại destroy
-Route::delete('product_delete_modal', 'ProductController@destroy')->name('product_delete_modal');
-Route::resource('admin/slide','SlideController');
-// Định dạng lại destroy
-Route::delete('slide_delete_modal', 'SlideController@destroy')->name('slide_delete_modal');
-Route::get('/setvalue', 'ProductController@setvalue');
+Route::resource('admin/about','Admin\AboutController');
+//Dinh Dang Lai Destroy
+Route::delete('about_delete_modal', 'Admin\AboutController@destroy')->name('about_delete_modal');
+Route::delete('brand_delete_modal', 'Admin\BrandController@destroy')->name('brand_delete_modal');
+Route::delete('category_delete_modal', 'Admin\CategoryController@destroy')->name('category_delete_modal');
+Route::delete('product_delete_modal', 'Admin\ProductController@destroy')->name('product_delete_modal');
+Route::delete('slide_delete_modal', 'Admin\SlideController@destroy')->name('slide_delete_modal');
+
+Route::resource('admin/brand','Admin\BrandController');
+Route::resource('admin/category','Admin\CategoryController');
+Route::resource('admin/comment','Admin\CommentController');
+Route::resource('admin/image','Admin\ImageController');
+Route::resource('admin/order','Admin\OrderController');
+Route::resource('admin/orderdetail','Admin\OrderDetailController');
+Route::resource('admin/product','Admin\ProductController');
+Route::resource('admin/slide','Admin\SlideController');
+
+Route::get('/setvalue', 'Admin\ProductController@setvalue');
 // END ADMIN
 
 // --------------------------------------------
 
 // USER HERE
 // Trang chu User hien thi o day
-Route::get('/', function () {
-    return view('user.home');
-});
-// END USER
+Route::get('/','User\HomeController@homepage');
+Route::resource('products','User\HomeController');
 
 // ---------------------------------------------
-Route::get('admin/home', function () {
-    return view('admin.homeadmin');
-});
-
 // CART
-Route::get('product', 'ProductsController@index');
-
-Route::get('cart', 'ProductsController@cart');
-
-Route::get('add-to-cart/{id}', 'ProductsController@addToCart');
-
-Route::patch('update-cart', 'ProductsController@update');
-
-Route::delete('remove-from-cart', 'ProductsController@remove');
+Route::get('cart', 'User\CartController@cart');
+Route::patch('update-cart', 'User\CartController@update');
+Route::get('add-to-cart/{id}', 'User\CartController@addToCart');
+Route::delete('remove-from-cart', 'User\CartController@remove');
 // END CART
-
 // ----------------------------------------------
+// END USER

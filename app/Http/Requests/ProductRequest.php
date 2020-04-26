@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Requests;
-
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ProductRequest extends FormRequest
@@ -21,21 +21,34 @@ class ProductRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(Request $request)
     {
-        return [
-            'product_code' => 'required|max:100',
-            'name' => 'required|max:100',
-            'description' => 'required|max:500',
-            'price' =>'required|numeric',
-            'quantity' =>'required',
-            'promotion' =>'required|numeric',
-            'brand_id' => 'required',
-            'category_id' => 'required',
-            'image' => 'required',
-
-
-        ];
+        if ($this->method()=='PUT') {
+            return [
+                'product_code' => 'required|max:100',
+                'name'=>'required|max:255|unique:products,name,'.$request->get('id'),
+                'description' => 'required|max:500',
+                'price' =>'required|numeric',
+                'quantity' =>'required',
+                'promotion' =>'required|numeric',
+                'brand_id' => 'required',
+                'category_id' => 'required',
+                'image' => 'required',
+            ];
+        }else{
+            return [
+                'product_code' => 'required|max:100',
+                'name' => 'required|max:255',
+                'name'=>'required|unique:products,name,'.$this->id,
+                'description' => 'required|max:500',
+                'price' =>'required|numeric',
+                'quantity' =>'required',
+                'promotion' =>'required|numeric',
+                'brand_id' => 'required',
+                'category_id' => 'required',
+                'image' => 'required',
+            ];
+        }
     }
     public function messages()
     {
@@ -44,6 +57,7 @@ class ProductRequest extends FormRequest
             'product_code.max'=>'Maximum length is 100 characters.',
             'name.required'=>'Please enter a product name.',
             'name.max'=>'Maximum length is 100 characters.',
+            'name.unique' => 'Product name already exists.',
             'quantity.required'=>'Please enter the product quality.',
             'price.required'=>'Please enter the product price.',
             'price.numeric'=>'You entered the wrong data type.',
