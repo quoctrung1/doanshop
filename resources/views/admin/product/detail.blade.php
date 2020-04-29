@@ -1,5 +1,5 @@
 @extends('admin.layout.main')
-@section('title','Detal Product')
+@section('title','Detail Product')
 @section('content')
 <div class="page-header">
     <ol class="breadcrumb">
@@ -11,11 +11,16 @@
 <div class="card">
 	<div class="card-body col-md-12">
 		<p><b>Name : </b>{{$product->name}}</p>
-		<p style="width: 1000px;"><b>Description : </b>{{$product->description}}</p>
-		<p ><b>Image : </b><img src="{{ asset('images/'.$product->image) }}" width="150" height="100"></img></p>
+		<p ><b>Description : </b>{!! $product->description !!}</p>
+		<?php  $images = explode(',',$product->image);	?>
+		<p ><b>Image : </b>
+			@foreach($images as $key => $image)
+			<img src="{{ asset('images/'.$image) }}" width="150" height="100"></img>
+			@endforeach
+		</p>
 		<p><b>Price : </b>{{$product->price}}</p>
-		<p><b>Quantity : </b>{{$product->quantity}}</p>
-		<p><b>Promotion : </b>{{$product->promotion}} %</p>
+		<p><b>Quantity : </b></p>
+		<p><b>Promotion : </b>{{$product->promotion}}%</p>
 		<p><b>Brand : </b>{{$product->brand->name}}</p>
 		<p><b>Category : </b>{{$product->category->name}}</p>
 	</div>

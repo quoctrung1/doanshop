@@ -19,14 +19,11 @@
 <div class="card-body ">
 	<div class="row">
 		<div class="col-md-9">
+			@if(count($abouts) == 0)
 			<a href="{{route('about.create')}}" class="btn btn-outline-success mb-2 mt-2">Create New</a>
+			@endif
 		</div>
 		<div class="col-md-3">
-			<div class="form-group">
-				{{ Form::open(['route' => ['about.index' ],'method' => 'get']) }}
-				{{ Form::text('seachtitle','',['class'=>'form-control ','style'=>'float: left','placeholder'=>'Search Title']) }}
-			</div>
-			{{ Form::close() }}
 		</div>
 	</div>
 	<table class="table table-striped table-sm">

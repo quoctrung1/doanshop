@@ -5,7 +5,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" >
     <!-- VENDOR CSS -->
     <link rel="stylesheet" href="{{asset('assets/vendor/bootstrap/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/vendor/font-awesome/css/font-awesome.min.css')}}">
@@ -21,7 +20,11 @@
     <link rel="apple-touch-icon" sizes="76x76" href="{{asset('assets/img/apple-icon.png')}}">
     <link rel="icon" type="image/png" sizes="96x96" href="{{asset('assets/img/favicon.png')}}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    
+    <!-- select2 mutiple -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
 </head>
 <body>
     <!-- WRAPPER -->
@@ -53,8 +56,8 @@
     </div>
     <!-- END WRAPPER -->
     <!-- Javascript -->
-    <script src="{{asset('assets/vendor/jquery/jquery.min.js')}}"></script>
-    <script src="{{asset('assets/vendor/bootstrap/js/bootstrap.min.js')}}"></script>
+    <!-- <script src="{{asset('assets/vendor/jquery/jquery.min.js')}}"></script> -->
+    <!-- <script src="{{asset('assets/vendor/bootstrap/js/bootstrap.min.js')}}"></script> -->
     <script src="{{asset('assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
     <!-- <script src="{{asset('assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js')}}"></script>
     <script src="{{asset('assets/vendor/chartist/js/chartist.min.js')}}"></script> -->

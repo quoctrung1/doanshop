@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use App\Models\Product_Detail;
 
 class Product_DetailController extends Controller
 {
@@ -78,8 +79,15 @@ class Product_DetailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $product_detail = Product_Detail::findOrFail($request->id);
+        if ($product_detail) {
+            $product_detail->isdelete = true;
+            $product_detail->update();
+            return back()->with('message','Delete success!');
+        } else {
+            return back()->with('err','Delete failse!');
+        }  
     }
 }

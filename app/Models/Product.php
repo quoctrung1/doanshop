@@ -21,6 +21,6 @@ class Product extends Model
     }
     public function product_detail()
     {
-        return $this->hasOne('App\Models\Product_Detail'); 
+        return $this->hasMany('App\Models\Product_Detail'); 
     }
 }

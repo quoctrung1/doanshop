@@ -28,31 +28,13 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $products = DB::table('products')->where('isdelete',false)->orderBy('created_at', 'desc');
-        $categories = $this->getCategory();
-
+        $products = Product::orderBy('created_at', 'desc')->where('isdelete',false);
+        //$categories = $this->getCategory();
         if ($request->name) {
-            $products = DB::table('products')->where('name', 'like', '%'.$request->name.'%');
+            $products = $products->where('name','like','%'.$request->name.'%'); 
         }
-        if ($request->categoryid) {
-            $products = $products->where('category_id', $request->categoryid);
-        }
-        $products = $products->paginate(3)->appends(request()->query());
-        // if($searchName || $searchCategory ){
-        //     $products = Product::when($searchName, function ($query) use ($searchName) {
-        //         return $query->where('name', 'like', "%{$searchName}%")->where('isdelete',false)->get(); 
-        //     })
-        //     ->when($searchCategory, function ($query) use ($searchCategory) {
-        //         return $query->whereHas('Category', function ($query) use ($searchCategory) {
-        //             $query->where('category_id', $searchCategory);
-        //         });
-        //     })  
-        //     ->paginate(3)
-        //     ->appends(request()->query());
-        // }else{
-        //     $products = Product::paginate(3);
-        // }
-        return view('admin.product.index',compact('products','categories'));
+        $products = $products->get();
+        return view('admin.product.index',compact('products'));
     }
 
     /**
@@ -62,7 +44,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-         $brand = Brand::where('isdelete',false)->pluck('name','id')->toArray();
+        $brand = Brand::where('isdelete',false)->pluck('name','id')->toArray();
         $category = Category::where('isdelete',false)->pluck('name','id')->toArray();
         return view('admin.product.create',compact('brand','category'));
     }
@@ -94,14 +76,28 @@ class ProductController extends Controller
         $product->slug = Str::slug($request->slug ? $request->slug : $request->name);
         $product->image = $imagename;
         $product->promotion = $request->promotion;
-        $product->quantity = $request->quantity;
         $product->brand_id = $request->brand_id;
         $product->category_id = $request->category_id;
         $product->isdelete = false;
         $product->isdisplay = false;
         $product->updated_at = null;
         $product->save();
-
+        foreach ($request->size as $key => $size) {
+            $colors = 'color'.$key;
+            $colors = $request->$colors;
+            foreach ($colors as $key => $color) {
+                $product_detail = new Product_Detail([
+                    'product_id' => $product->id,
+                    'size' => $size,
+                    'color' => $color,
+                    'isdelete' => false,
+                    'isdisplay' => false,
+                    'updated_at' => null
+                ]);
+                $product_detail->save();
+            }
+        }
+        
         if ($product){
             return redirect('/admin/product')->with('message','Create successfully!');
         }else{
@@ -132,7 +128,8 @@ class ProductController extends Controller
         $product = Product::findOrfail($id);
         $brand = Brand::where('isdelete',false)->pluck('name','id')->toArray();
         $category = Category::where('isdelete',false)->pluck('name','id')->toArray();
-        return view('admin.product.edit',compact('brand','category','product'));
+        $product_details = Product_Detail::where('isdelete',false)->where('product_id',$id)->get();
+        return view('admin.product.edit',compact('brand','category','product','product_details'));
     }
 
     /**
@@ -144,7 +141,6 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, $id)
     {
-        $request->validated();
         $product = Product::findOrFail($id);
         if($product)
         {
@@ -166,7 +162,6 @@ class ProductController extends Controller
             $product->slug = Str::slug($request->slug ? $request->slug : $request->name);
             $product->image = $imagename;
             $product->promotion = $request->promotion;
-            $product->quantity = $request->quantity;
             $product->brand_id = $request->brand_id;
             $product->category_id = $request->category_id;
             $product->updated_at = Carbon::now()->toDateTimeString();
@@ -174,6 +169,23 @@ class ProductController extends Controller
             $product->isdisplay = false;
             $product->updated_at = Carbon::now()->toDateTimeString() ;
             $product->update();
+            if ($request->size) {
+                foreach ($request->size as $key => $size) {
+                    $colors = 'color'.$key;
+                    $colors = $request->$colors;
+                    foreach ($colors as $key => $color) {
+                        $product_detail = new Product_Detail([
+                            'product_id' => $id,
+                            'size' => $size,
+                            'color' => $color,
+                            'isdelete' => false,
+                            'isdisplay' => false,
+                            'updated_at' => null
+                        ]);
+                        $product_detail->save();
+                    }
+                }
+            }
             return redirect('/admin/product')->with('message','Update successfully!');
         }
         return back()->with('err','Update err!');
@@ -201,6 +213,13 @@ class ProductController extends Controller
         if ($request->ajax()) {
             $value = class_basename($request->value);
             return Response($value);
+        }
+    }
+    public function getcolor(Request $request)
+    {
+        if ($request->ajax()) {
+            $colors = Product_Detail::select('color')->where('isdelete',false)->where('product_id',$request->id)->where('size',$request->size)->get();
+            return Response($colors);
         }
     }
 }

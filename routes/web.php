@@ -24,6 +24,7 @@ Route::delete('brand_delete_modal', 'Admin\BrandController@destroy')->name('bran
 Route::delete('category_delete_modal', 'Admin\CategoryController@destroy')->name('category_delete_modal');
 Route::delete('product_delete_modal', 'Admin\ProductController@destroy')->name('product_delete_modal');
 Route::delete('slide_delete_modal', 'Admin\SlideController@destroy')->name('slide_delete_modal');
+Route::delete('product_detail_delete_modal', 'Admin\Product_DetailController@destroy')->name('product_detail_delete_modal');
 
 Route::resource('admin/brand','Admin\BrandController');
 Route::resource('admin/category','Admin\CategoryController');
@@ -33,8 +34,13 @@ Route::resource('admin/order','Admin\OrderController');
 Route::resource('admin/orderdetail','Admin\OrderDetailController');
 Route::resource('admin/product','Admin\ProductController');
 Route::resource('admin/slide','Admin\SlideController');
-
+Route::resource('admin/store','Admin\StoreController');
+// function ajax
 Route::get('/setvalue', 'Admin\ProductController@setvalue');
+Route::get('/getcolor', 'Admin\ProductController@getcolor');
+Route::get('/get_list_size', 'Admin\StoreController@getListSize');
+Route::get('/get_list_color', 'Admin\StoreController@getListColor');
+Route::get('/get_quantity', 'Admin\StoreController@getQuantity');
 // END ADMIN
 
 // --------------------------------------------

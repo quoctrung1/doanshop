@@ -138,7 +138,7 @@
 								<li class="col-md-12">
 									<input type="radio" name="category" id="cate{{$key}}" value="{{$category->name}}" class="col-md-1" style="margin-top: 7px;">
 									<label for="cate{{$key}}" class="col-md-9">{{ $category->name }}</label>
-									<span class="count col-md-1">({{ $listquantity[$key] }})</span>
+									<span class="count col-md-2">({{ $listquantity[$key] }})</span>
 								</li>
 								@endforeach
 							</ul>
@@ -149,22 +149,21 @@
 								<h2>Filter by Price</h2>
 							</div>
 							<ul class="product-categories">
-								<li class="col-md-12">
-									<input type="radio" name="price" id="price1" class="col-md-1" value="<100" style="margin-top: 7px;">
-									<label for="price1" class="col-md-9">>200$</label>
-								</li>
-								<li class="col-md-12">
-									<input type="radio" name="price" id="price2" class="col-md-1" value="200-400" style="margin-top: 7px;">
-									<label for="price2" class="col-md-9">200$-400$</label>
-								</li>
-								<li class="col-md-12">
-									<input type="radio" name="price" id="price3" class="col-md-1" value="400-700" style="margin-top: 7px;">
-									<label for="price3" class="col-md-9">400$-700$</label>
-								</li>
-								<li class="col-md-12">
-									<input type="radio" name="price" id="price4" class="col-md-1" value=">700" style="margin-top: 7px;">
-									<label for="price4" class="col-md-9">>700$</label>
-								</li>
+								<?php
+									if (isset($products)) {
+										$list = array();
+										foreach ($products as $key => $price) {
+											$list[] = $price->price;
+										}
+										sort($list);
+									}
+									?>
+									@foreach($list as $price)
+									<li class="col-md-12" hidden="{{$price}}">
+										<input type="radio" name="price" id="price2" class="col-md-1" value="{{$price}}" style="margin-top: 7px;">
+										<label for="price2" class="col-md-9">{{$price}}</label>
+									</li>
+									@endforeach
 							</ul>
 						</div>
 						<!-- single widget -->
@@ -269,10 +268,10 @@
 										<span style="width:80%"><strong class="rating"> </strong> </span>
 									</div>
 									@if ($product->promotion)
-									<del><span class="amount nrb">{{ $product->price }}</span></del>
-									<span class="price"><span class="amount">{{ $product->promotion }}</span></span>
+									<del><span class="amount nrb">${{ $product->price }}</span></del>
+									<span class="price"><span class="amount">${{ $product->price - intval(($product->price * $product->promotion)/100) }}</span></span>
 									@else    
-									<span class="price"><span class="amount">{{ $product->price }}</span></span>
+									<span class="price"><span class="amount">${{ $product->price }}</span></span>
 									@endif
 								</div>
 								@if ($product->promotion)

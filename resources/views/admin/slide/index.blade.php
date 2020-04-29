@@ -41,19 +41,19 @@
 		</thead>
 		<tbody>
 			<tr>
-				@foreach($slides as $key => $slides)
+				@foreach($slides as $key => $slide)
 				<tr>
 					<td >{{ ++$key }}</td>
-					<td>{{$slides->link}}</td>
-					<td><img src="{{ asset('images/'.$slides->url_img) }}" width="80" height=></img>
+					<td>{{$slide->link}}</td>
+					<td><img src="{{ asset('images/'.$slide->url_img) }}" width="80" height=></img>
 					</td>
-					<td>{{$slides->display_order}}</td>
+					<td>{{$slide->display_order}}</td>
 					<td colspan="5">
 						<!-- Button trigger modal -->
 						<!-- Tạo data-id để chưa giá trị id -->
-						<button type="button" class="fa fa-trash deleteUser text-danger btn" data-id="{{$slides->id}}" data-toggle="modal" data-target="#Modal" style="width: 40px; padding: 7px 5px;">
+						<button type="button" class="fa fa-trash deleteUser text-danger btn" data-id="{{$slide->id}}" data-toggle="modal" data-target="#Modal" style="width: 40px; padding: 7px 5px;">
 						</button>
-						<a href="{{route('slide.edit',$slides->id)}}" class="ml-1 btn" style="width:40px; padding: 5px;"><i class="fa fa-edit "></i></a>
+						<a href="{{route('slide.edit',$slide->id)}}" class="ml-1 btn" style="width:40px; padding: 5px;"><i class="fa fa-edit "></i></a>
 					</td>
 				</tr>
 				@endforeach

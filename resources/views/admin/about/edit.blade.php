@@ -27,7 +27,7 @@
 				<div class="form-group col-md-12 {{ $errors->has('content') ?'has-error':'' }}">
 					{{ Form::label('content','Content: ')}}
 					<br>
-					<textarea name=content id="editor" cols="" rows="10" class="col-md-8">{{ $about->content }}</textarea>
+					{{ Form::textarea('content',$about->content,['id'=>'editor'])}}
 					<br>
 					<span class="text-danger">{{ $errors->first('content')}}</span>
 				</div>

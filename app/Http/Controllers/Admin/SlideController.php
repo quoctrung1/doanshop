@@ -18,7 +18,6 @@ class SlideController extends Controller
      */
     public function index(Request $request)
     {
-
         $slides = Slide::orderBy('created_at', 'desc')->where('isdelete',false)->get();
         return view('admin.slide.index',compact('slides'));
     }

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Requests;
+
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -25,30 +26,28 @@ class ProductRequest extends FormRequest
     {
         if ($this->method()=='PUT') {
             return [
-                'product_code' => 'required|max:100',
                 'name'=>'required|max:255|unique:products,name,'.$request->get('id'),
                 'description' => 'required|max:500',
                 'price' =>'required|numeric',
-                'quantity' =>'required',
                 'promotion' =>'required|numeric',
                 'brand_id' => 'required',
                 'category_id' => 'required',
                 'image' => 'required',
+                'selectsize' => 'required'
             ];
         }else{
             return [
                 'product_code' => 'required|max:100',
-                'name' => 'required|max:255',
-                'name'=>'required|unique:products,name,'.$this->id,
+                'name'=>'required|max:255|unique:products,name,'.$this->id,
                 'description' => 'required|max:500',
                 'price' =>'required|numeric',
-                'quantity' =>'required',
                 'promotion' =>'required|numeric',
                 'brand_id' => 'required',
                 'category_id' => 'required',
                 'image' => 'required',
+                'selectsize' => 'required'
             ];
-        }
+        } 
     }
     public function messages()
     {
@@ -56,19 +55,17 @@ class ProductRequest extends FormRequest
             'product_code.required'=>'Please enter your product key.',
             'product_code.max'=>'Maximum length is 100 characters.',
             'name.required'=>'Please enter a product name.',
-            'name.max'=>'Maximum length is 100 characters.',
-            'name.unique' => 'Product name already exists.',
-            'quantity.required'=>'Please enter the product quality.',
+            'name.max'=>'Maximum length is 100 characters.', 
             'price.required'=>'Please enter the product price.',
+            'promotion.required'=>'Please enter the product promotion.',
             'price.numeric'=>'You entered the wrong data type.',
-            'promotion.required'=>'Please enter product promotion.',
-            'promotion.numeric'=>'You entered the wrong data type.',
             'description.required'=>'Please enter the product content.',
             'description.max'=>'Maximum length is 500 characters.',
             'brand_id.required'=>'Please select a brand. ',
             'category_id.required'=>'Please select a category. ',
-            'image.required'=>'Please select a picture. '
+            'image.required'=>'Please select a picture. ',
 
         ];
     }
 }
+ 

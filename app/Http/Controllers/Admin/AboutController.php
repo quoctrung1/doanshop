@@ -16,8 +16,7 @@ class AboutController extends Controller
      */
     public function index(Request $request)
     {
-        $abouts= DB::table('abouts')->paginate(4);
-        $abouts = About::all();
+        $abouts= DB::table('abouts')->get();
         return view('admin.about.index',compact('abouts'));
     }
 
@@ -28,6 +27,7 @@ class AboutController extends Controller
      */
     public function create()
     {
+        
         return view('admin.about.create');
     }
 
@@ -44,7 +44,7 @@ class AboutController extends Controller
             $request->logo->move('images', $logo);
             $about = new About;
             $about->title = $request->title;
-            $about->title = $request->name;
+            $about->name = $request->name;
             $about->phone = $request->phone;
             $about->content = $request->content;
             $about->email = $request->email;
@@ -98,7 +98,7 @@ class AboutController extends Controller
             $logo = $request->logo;
         } 
         $about->title = $request->title;
-        $about->title = $request->name;
+        $about->name = $request->name;
         $about->phone = $request->phone;
         $about->content = $request->content;
         $about->email = $request->email;
